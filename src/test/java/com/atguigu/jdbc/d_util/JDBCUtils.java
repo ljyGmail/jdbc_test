@@ -1,10 +1,7 @@
 package com.atguigu.jdbc.d_util;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Properties;
 
 /**
@@ -52,6 +49,36 @@ public class JDBCUtils {
      * @param ps
      */
     public static void closeResource(Connection conn, Statement ps) {
+        try {
+            if (ps != null)
+                ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (conn != null)
+                conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 关闭资源的操作
+     *
+     * @param conn
+     * @param ps
+     * @param rs
+     */
+    public static void closeResource(Connection conn, Statement ps, ResultSet rs) {
+        try {
+            if (rs != null)
+                rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         try {
             if (ps != null)
                 ps.close();
