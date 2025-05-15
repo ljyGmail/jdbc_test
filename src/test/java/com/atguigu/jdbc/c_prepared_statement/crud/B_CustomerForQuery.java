@@ -87,10 +87,11 @@ public class B_CustomerForQuery {
                     Object columnValue = rs.getObject(i + 1);
 
                     // 获取每个列的列名
-                    String columnName = rsmd.getColumnName(i + 1);
+                    // String columnName = rsmd.getColumnName(i + 1);
+                    String columnLabel = rsmd.getColumnLabel(i + 1);
 
                     // 给cust对象指定的columnName属性，赋值为columnValue，通过反射
-                    Field field = Customer.class.getDeclaredField(columnName);
+                    Field field = Customer.class.getDeclaredField(columnLabel);
                     field.setAccessible(true);
                     field.set(cust, columnValue);
                 }
