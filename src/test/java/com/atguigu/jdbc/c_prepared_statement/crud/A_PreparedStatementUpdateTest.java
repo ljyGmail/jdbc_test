@@ -1,5 +1,6 @@
 package com.atguigu.jdbc.c_prepared_statement.crud;
 
+import com.atguigu.jdbc.d_util.JDBCUtils;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -76,6 +77,34 @@ public class A_PreparedStatementUpdateTest {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    // 修改customers表中的一条记录
+    @Test
+    public void testUpdate() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            // 1. 获取数据库的连接
+            conn = JDBCUtils.getConnection();
+
+            // 2. 预编译sql语句，返回PreparedStatement的实例
+            String sql = "update customers set name = ? where id = ?";
+            ps = conn.prepareStatement(sql);
+
+            // 3. 填充占位符
+            ps.setObject(1, "莫扎特");
+            ps.setObject(2, 18);
+
+            // 4. 执行
+            ps.execute();
+            System.out.println("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 5. 资源的关闭
+            JDBCUtils.closeResource(conn, ps);
         }
     }
 }
