@@ -1,4 +1,4 @@
-package com.atguigu.jdbc.b_prepared_statement.statement;
+package com.atguigu.jdbc.b_statement.crud;
 
 import org.junit.Test;
 
