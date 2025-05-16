@@ -10,6 +10,23 @@ import java.sql.PreparedStatement;
  * ClassName: TransactionTest
  * Package: com.atguigu.jdbc.h_batch.i_transaction
  * Description:
+ * 1. 什么叫数据库事务？
+ * 事务: 一组逻辑操作单元，使数据从一种状态变换到两一种状态。
+ * > 一组逻辑操作单元: 一个或多个DML操作
+ * <p>
+ * 2. 事务处理的原则:
+ * 保证所有事务都作为一个工作单元来执行，即使出现了故障，都不能改变这种执行方式。
+ * 当在一个事务中执行多个操作时，要么所有的事务都被提交(commit)，那么这些修改就永久地被保存下来;
+ * 要么数据库管理系统将放弃所有修改，整个事务回滚(rollback)到最初状态。
+ * <p>
+ * 3. 数据一旦提交，就不可回滚。
+ * <p>
+ * 4. 哪些操作会导致数据的自动提交？
+ * > DDL操作一旦执行，都会自动提交。
+ * ----> set autocommit = false对DDL操作失效。
+ * > DML默认情况下，一旦执行，就会自动提交。
+ * ----> 我们可以通过set autocommit = false的方式取消DML操作的自动提交。
+ * > 默认在关闭连接时，会自动地提交数据。
  *
  * @Author: ljy
  * @Create: 2025. 5. 16. 오후 6:16
