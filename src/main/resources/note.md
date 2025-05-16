@@ -26,3 +26,8 @@
 
 - 对于如下异常，需要在`my.ini`配置文件中加上`[mysqld] max_allowed_packet=16M`
 ![img.png](images/blob_insert_exception.png)
+
+## 事务的ACID属性及4种隔离级别
+![img.png](images/acid_a.png)
+![img_1.png](images/acid_b.png)
+![img_2.png](images/acid_c.png)
