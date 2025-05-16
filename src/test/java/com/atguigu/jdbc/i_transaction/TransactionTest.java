@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * ClassName: TransactionTest
@@ -34,6 +35,7 @@ import java.sql.PreparedStatement;
  */
 public class TransactionTest {
 
+    // ********************未考虑数据库事务情况下的转账操作********************
     // 通用的增删改操作 -- version1.0
     public int update(String sql, Object... args) { // sql中占位符的个数与可变形参的长度相同
         Connection conn = null;
@@ -78,4 +80,62 @@ public class TransactionTest {
 
         System.out.println("转账成功");
     }
+
+    // ********************考虑数据库事务情况下的转账操作********************
+    // 通用的增删改操作 -- version2.0 (考虑上事务)
+    public int update(Connection conn, String sql, Object... args) { // sql中占位符的个数与可变形参的长度相同
+        PreparedStatement ps = null;
+        try {
+            // 1. 预编译sql语句，返回PreparedStatement的实例
+            ps = conn.prepareStatement(sql);
+            // 2. 填充占位符
+            for (int i = 0; i < args.length; i++) {
+                ps.setObject(i + 1, args[i]); // 小心参数声明错误
+            }
+            // 3. 执行
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 4. 资源的关闭
+            JDBCUtils.closeResource(null, ps);
+        }
+        return 0;
+    }
+
+    @Test
+    public void testUpdateWithTx() {
+        Connection conn = null;
+        try {
+            conn = JDBCUtils.getConnection();
+
+            System.out.println(conn.getAutoCommit());
+            // 1. 取消数据的自动提交
+            conn.setAutoCommit(false);
+
+            String sql1 = "update user_table set balance = balance - 100 where user = ?";
+            update(conn, sql1, "AA");
+
+            // 模拟网络异常
+            System.out.println(10 / 0);
+
+            String sql2 = "update user_table set balance = balance + 100 where user = ?";
+            update(conn, sql2, "BB");
+
+            // 2. 提交数据
+            conn.commit();
+            System.out.println("转账成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                // 3. 回滚数据
+                conn.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            JDBCUtils.closeResource(conn, null);
+        }
+    }
+
 }
