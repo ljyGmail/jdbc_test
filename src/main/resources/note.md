@@ -10,7 +10,11 @@
 > SQL是需要结合列明和类的属性名来写，注意起别名。
 
 - 两种技术
-  - JDBC结果集的元数据: ResultSetMetaData
-    - 获取列数: getColumnCount()
-    - 获取列的别名: getColumnLabel()
-  - 通过反射，创建指定类的对象，获取指定的属性并赋值
+    - JDBC结果集的元数据: ResultSetMetaData
+        - 获取列数: getColumnCount()
+        - 获取列的别名: getColumnLabel()
+    - 通过反射，创建指定类的对象，获取指定的属性并赋值
+
+# 章节练习
+
+![img.png](images/exer1.png)
