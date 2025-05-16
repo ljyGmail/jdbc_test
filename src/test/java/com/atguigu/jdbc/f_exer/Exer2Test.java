@@ -160,4 +160,43 @@ public class Exer2Test {
             System.out.println("您的输入有误，请重新进入程序。");
         }
     }
+
+    // 问题3: 删除指定的学生信息
+    @Test
+    public void testDeleteByExamCard() {
+        System.out.println("请输入学生的考号: ");
+        Scanner scanner = new Scanner(System.in);
+        String examCard = scanner.next();
+
+        // 查询指定准考证号的学生
+        String sql = "select FlowID flowID, Type type, IDCard, ExamCard examCard, StudentName name, Location location, Grade grade from examstudent where ExamCard = ?";
+        Student student = getInstance(Student.class, sql, examCard);
+
+        if (student == null) {
+            System.out.println("查无此人，请重新输入");
+        } else {
+            String sql1 = "delete from examstudent where ExamCard = ?";
+            int deleteCount = update(sql1, examCard);
+            if (deleteCount > 0) {
+                System.out.println("删除成功!");
+            }
+        }
+    }
+
+    // 对上面方法优化以后的操作
+    @Test
+    public void testDeleteByExamCard1() {
+        System.out.println("请输入学生的考号: ");
+        Scanner scanner = new Scanner(System.in);
+        String examCard = scanner.next();
+
+        String sql = "delete from examstudent where ExamCard = ?";
+        int deleteCount = update(sql, examCard);
+
+        if (deleteCount > 0) {
+            System.out.println("删除成功");
+        } else {
+            System.out.println("查无此人，请重新输入");
+        }
+    }
 }
