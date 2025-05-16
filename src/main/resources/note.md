@@ -18,3 +18,7 @@
 # 章节练习
 
 ![img.png](images/exer1.png)
+
+![img.png](images/exer2_a.png)
+![img_1.png](images/exer2_b.png)
+![img_2.png](images/exer2_c.png)
