@@ -97,6 +97,14 @@ public class TransactionTest {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            try {
+                // 恢复其为自动提交数据
+                // 主要针对于使用数据库连接池的使用
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             // 4. 资源的关闭
             JDBCUtils.closeResource(null, ps);
         }
@@ -131,7 +139,7 @@ public class TransactionTest {
                 // 3. 回滚数据
                 conn.rollback();
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                e.printStackTrace();
             }
         } finally {
             JDBCUtils.closeResource(conn, null);
