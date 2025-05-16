@@ -25,9 +25,20 @@
 ![img.png](images/exer2_d.png)
 
 - 对于如下异常，需要在`my.ini`配置文件中加上`[mysqld] max_allowed_packet=16M`
-![img.png](images/blob_insert_exception.png)
+  ![img.png](images/blob_insert_exception.png)
 
 ## 事务的ACID属性及4种隔离级别
+
 ![img.png](images/acid_a.png)
 ![img_1.png](images/acid_b.png)
 ![img_2.png](images/acid_c.png)
+
+### 6.3.3 在MySql中设置隔离级别
+
+- 每启动一个mysql程序，就会获得一个单独的数据库连接，每个数据库连接都有一个全局变量`@@transaction_isolation`，表示当前的事务隔离级别。
+- 查看当前的隔离级别: `select @@transaction_isolation;`
+- 设置当前mysql连接的隔离级别: `set transaction isolation level read committed;`
+- 设置数据库系统的全局隔离级别: `set global transaction isolation level read committed;`
+- 补充操作
+    - 创建mysql数据库用户: `create user tom identified by '123456';`
+    - 授予权限: `grant select, insert, update, delete on test.* to tom@localhost;`
