@@ -23,3 +23,6 @@
 ![img_1.png](images/exer2_b.png)
 ![img_2.png](images/exer2_c.png)
 ![img.png](images/exer2_d.png)
+
+- 对于如下异常，需要在`my.ini`配置文件中加上`[mysqld] max_allowed_packet=10M`
+![img.png](images/blob_insert_exception.png)

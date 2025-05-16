@@ -27,10 +27,10 @@ public class BlobTest {
         String sql = "insert into customers(name, email, birth, photo) values(?, ?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
 
-        ps.setObject(1, "宋红康");
-        ps.setObject(2, "shk@123.com");
-        ps.setObject(3, "1973-04-12");
-        FileInputStream is = new FileInputStream(new File("src/main/resources/images/shk.png"));
+        ps.setObject(1, "狗狗");
+        ps.setObject(2, "dog@123.com");
+        ps.setObject(3, "2025-05-11");
+        FileInputStream is = new FileInputStream(new File("src/main/resources/images/dog.png"));
         ps.setBlob(4, is);
 
         ps.execute();
