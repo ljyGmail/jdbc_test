@@ -11,6 +11,7 @@ import java.util.List;
  * ClassName: BaseDao
  * Package: com.atguigu.jdbc.j_dao
  * Description:
+ * DAO: Data(base) Access Object
  * 封装了针对于数据表的通用操作。
  *
  * @Author: ljy
