@@ -18,7 +18,7 @@ import java.util.List;
  * @Create: 2025. 5. 18. 오후 11:29
  * @Version 1.0
  */
-public abstract class BaseDao {
+public abstract class BaseDAO {
     // 通用的增删改操作 -- version2.0 (考虑上事务)
     public int update(Connection conn, String sql, Object... args) { // sql中占位符的个数与可变形参的长度相同
         PreparedStatement ps = null;

@@ -1,9 +1,7 @@
 package com.atguigu.jdbc.j_dao;
 
 import com.atguigu.jdbc.e_bean.Customer;
-import lombok.val;
 
-import java.security.cert.URICertStoreParameters;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
  * @Create: 2025. 5. 19. 오전 12:17
  * @Version 1.0
  */
-public class CustomDaoImpl extends BaseDao implements CustomerDAO {
+public class CustomDAOImpl extends BaseDAO implements CustomerDAO {
     @Override
     public void insert(Connection conn, Customer cust) {
         String sql = "insert into customers(name, email, birth) values(?, ?, ?)";
