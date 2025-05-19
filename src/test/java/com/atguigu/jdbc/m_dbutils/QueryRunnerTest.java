@@ -4,11 +4,13 @@ import com.atguigu.jdbc.d_util.JDBCUtils;
 import com.atguigu.jdbc.d_util.JDBCUtilsWithDataSource;
 import com.atguigu.jdbc.e_bean.Customer;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.*;
 import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +159,44 @@ public class QueryRunnerTest {
             ScalarHandler handler = new ScalarHandler();
             Date maxBirth = (Date) runner.query(conn, sql, handler);
             System.out.println(maxBirth);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.closeResource(conn, null);
+        }
+    }
+
+    /*
+    自定义ResultSetHandler的实现类
+     */
+    @Test
+    public void testQuery7() {
+        Connection conn = null;
+        try {
+            QueryRunner runner = new QueryRunner();
+            conn = JDBCUtilsWithDataSource.getConnection3();
+            String sql = "select id,name, email,birth from customers where id = ?";
+            ResultSetHandler<Customer> handler = new ResultSetHandler<>() {
+
+                @Override
+                public Customer handle(ResultSet rs) throws SQLException {
+                    // System.out.println("handler");
+                    // return null;
+                    // return new Customer(12, "成龙", "jacky@126.com", new Date(1234567890L));
+                    // 下面的逻辑就相当于BeanHandler的处理过程
+                    if (rs.next()) {
+                        int id = rs.getInt("id");
+                        String name = rs.getString("name");
+                        String email = rs.getString("email");
+                        Date birth = rs.getDate("birth");
+                        Customer customer = new Customer(id, name, email, birth);
+                        return customer;
+                    }
+                    return null;
+                }
+            };
+            Customer customer = runner.query(conn, sql, handler, 20);
+            System.out.println(customer);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
