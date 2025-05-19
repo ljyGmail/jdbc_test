@@ -14,7 +14,7 @@ import java.sql.Connection;
  * @Create 2025. 5. 19. 오전 10:28
  * @Version 1.0
  */
-public class C3P0Test {
+public class A_C3P0Test {
 
     // 方式1:
     @Test
