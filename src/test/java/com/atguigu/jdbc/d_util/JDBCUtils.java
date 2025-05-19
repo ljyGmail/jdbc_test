@@ -1,5 +1,7 @@
 package com.atguigu.jdbc.d_util;
 
+import org.apache.commons.dbutils.DbUtils;
+
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -92,5 +94,36 @@ public class JDBCUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 使用dbutils.jar中提供的DbUtils工具类，实现资源的关闭。
+     *
+     * @param conn
+     * @param ps
+     * @param rs
+     */
+    public static void closeResource1(Connection conn, Statement ps, ResultSet rs) {
+        /*
+        try {
+            DbUtils.close(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            DbUtils.close(ps);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            DbUtils.close(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         */
+
+        DbUtils.closeQuietly(conn);
+        DbUtils.closeQuietly(ps);
+        DbUtils.closeQuietly(rs);
     }
 }
