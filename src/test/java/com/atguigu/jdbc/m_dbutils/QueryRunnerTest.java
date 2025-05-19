@@ -4,13 +4,11 @@ import com.atguigu.jdbc.d_util.JDBCUtils;
 import com.atguigu.jdbc.d_util.JDBCUtilsWithDataSource;
 import com.atguigu.jdbc.e_bean.Customer;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.MapHandler;
-import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.*;
 import org.junit.Test;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +108,7 @@ public class QueryRunnerTest {
 
     /*
      MapListHandler: 是ResultSetHandler接口的实现类，对应表中的多条记录。
-     将字段及相应字段的值作为map中的key和value。
+     将字段及相应字段的值作为map中的key和value，并将这些map添加到List中。
      */
     @Test
     public void testQuery4() {
@@ -122,6 +120,43 @@ public class QueryRunnerTest {
             MapListHandler handler = new MapListHandler();
             List<Map<String, Object>> list = runner.query(conn, sql, handler, 20);
             list.forEach(System.out::println);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.closeResource(conn, null);
+        }
+    }
+
+    /*
+    ScalarHandler: 用于查询特殊值。
+     */
+    @Test
+    public void testQuery5() {
+        Connection conn = null;
+        try {
+            QueryRunner runner = new QueryRunner();
+            conn = JDBCUtilsWithDataSource.getConnection3();
+            String sql = "select count(*) from customers";
+            ScalarHandler handler = new ScalarHandler();
+            Long count = (Long) runner.query(conn, sql, handler);
+            System.out.println(count);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.closeResource(conn, null);
+        }
+    }
+
+    @Test
+    public void testQuery6() {
+        Connection conn = null;
+        try {
+            QueryRunner runner = new QueryRunner();
+            conn = JDBCUtilsWithDataSource.getConnection3();
+            String sql = "select max(birth) from customers";
+            ScalarHandler handler = new ScalarHandler();
+            Date maxBirth = (Date) runner.query(conn, sql, handler);
+            System.out.println(maxBirth);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
